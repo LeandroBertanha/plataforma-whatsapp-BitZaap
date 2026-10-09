@@ -16,28 +16,32 @@ routerAdd(
     const apiUrl = $secrets.get('EVOLUTION_API_URL')
     const apiKey = $secrets.get('EVOLUTION_API_KEY')
 
-    if (apiUrl && apiKey) {
-      let url = apiUrl
-      if (url.endsWith('/')) url = url.slice(0, -1)
-      url = `${url}/instance/logout/${instance.getString('instance_name')}`
+    if (!apiUrl || !apiKey) {
+      return e.json(503, { message: 'Evolution API configuration missing' })
+    }
 
-      try {
-        const res = $http.send({
-          url: url,
-          method: 'DELETE',
-          headers: {
-            apikey: apiKey,
-            'Content-Type': 'application/json',
-          },
-          timeout: 10,
-        })
+    let url = apiUrl
+    if (url.endsWith('/')) url = url.slice(0, -1)
+    url = `${url}/instance/logout/${instance.getString('instance_name')}`
 
-        if (res.statusCode >= 400) {
-          $app.logger().error('Evolution API logout returned error', 'status', res.statusCode)
-        }
-      } catch (err) {
-        $app.logger().error('Evolution API logout failed (network)', 'error', err.message)
+    try {
+      const res = $http.send({
+        url: url,
+        method: 'DELETE',
+        headers: {
+          apikey: apiKey,
+          'Content-Type': 'application/json',
+        },
+        timeout: 10,
+      })
+
+      if (res.statusCode < 200 || res.statusCode >= 300) {
+        $app.logger().error('Evolution API logout returned error', 'status', res.statusCode)
+        return e.json(502, { message: 'Evolution API rejected the logout request' })
       }
+    } catch (err) {
+      $app.logger().error('Evolution API logout failed (network)', 'error', String(err))
+      return e.json(502, { message: 'Evolution API is unavailable' })
     }
 
     instance.set('status', 'disconnected')

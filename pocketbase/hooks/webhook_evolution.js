@@ -1,4 +1,17 @@
 routerAdd('POST', '/backend/v1/webhook/evolution', (e) => {
+  const configuredSecret = $secrets.get('EVOLUTION_WEBHOOK_SECRET') || ''
+  const receivedSecret = e.request.header.get('X-Bitzaap-Webhook-Secret') || ''
+
+  if (!configuredSecret) {
+    $app.logger().error('Evolution webhook rejected because its secret is not configured')
+    return e.json(503, { ok: false, error: 'Webhook not configured' })
+  }
+
+  if (receivedSecret !== configuredSecret) {
+    $app.logger().warn('Evolution webhook rejected due to invalid authentication')
+    return e.json(401, { ok: false, error: 'Unauthorized' })
+  }
+
   const body = e.requestInfo().body
   if (!body) return e.json(200, { ok: true })
 
