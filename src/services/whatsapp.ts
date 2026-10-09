@@ -1,10 +1,28 @@
 import pb from '@/lib/pocketbase/client'
 
+export type IntegrationStatus = {
+  ready: boolean
+  evolution: {
+    urlConfigured: boolean
+    keyConfigured: boolean
+  }
+  webhook: {
+    urlConfigured: boolean
+    secretConfigured: boolean
+  }
+  instance: {
+    status: string
+  }
+}
+
 export const getInstances = () =>
   pb.collection('whatsapp_instances').getFullList({ sort: '-created' })
 
 export const getContacts = () =>
   pb.collection('whatsapp_contacts').getFullList({ sort: '-last_message_at' })
+
+export const getIntegrationStatus = () =>
+  pb.send<IntegrationStatus>('/backend/v1/integration/status', { method: 'GET' })
 
 export const toggleContactAgent = (contactId: string, paused: boolean) =>
   pb.collection('whatsapp_contacts').update(contactId, { agent_paused: paused })

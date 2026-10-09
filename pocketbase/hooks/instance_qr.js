@@ -34,17 +34,23 @@ routerAdd(
         timeout: 15,
       })
 
-      if (res.statusCode === 200 && res.json) {
-        if (res.json.base64) {
-          instance.set('qrcode', res.json.base64)
-          instance.set('status', 'connecting')
-        } else if (res.json.instance?.state === 'open') {
-          instance.set('status', 'connected')
-        }
-        $app.saveNoValidate(instance)
+      if (res.statusCode < 200 || res.statusCode >= 300 || !res.json) {
+        $app.logger().error('Evolution QR request failed', 'status', res.statusCode)
+        return e.json(502, { message: 'Evolution API rejected the QR Code request' })
       }
+
+      if (res.json.base64) {
+        instance.set('qrcode', res.json.base64)
+        instance.set('status', 'connecting')
+      } else if (res.json.instance?.state === 'open') {
+        instance.set('status', 'connected')
+      } else {
+        return e.json(502, { message: 'Evolution API returned an invalid QR Code response' })
+      }
+      $app.saveNoValidate(instance)
     } catch (err) {
       $app.logger().error('Evolution QR Error', 'error', String(err))
+      return e.json(502, { message: 'Evolution API is unavailable' })
     }
 
     return e.json(200, {

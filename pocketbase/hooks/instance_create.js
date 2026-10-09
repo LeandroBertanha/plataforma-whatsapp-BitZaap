@@ -38,6 +38,7 @@ onRecordAfterCreateSuccess(
         let evoUrl = $secrets.get('EVOLUTION_API_URL') || ''
         const evoKey = $secrets.get('EVOLUTION_API_KEY') || ''
         let webhookUrl = $secrets.get('APP_WEBHOOK_URL') || ''
+        const webhookSecret = $secrets.get('EVOLUTION_WEBHOOK_SECRET') || ''
 
         if (evoUrl.endsWith('/')) {
           evoUrl = evoUrl.slice(0, -1)
@@ -53,13 +54,16 @@ onRecordAfterCreateSuccess(
             integration: 'WHATSAPP-BAILEYS',
           }
 
-          if (webhookUrl) {
+          if (webhookUrl && webhookSecret) {
             createBody.webhook = {
               url: webhookUrl + '/backend/v1/webhook/evolution',
               byEvents: false,
               base64: false,
               enabled: true,
               events: ['MESSAGES_UPSERT', 'CONNECTION_UPDATE'],
+              headers: {
+                'X-Bitzaap-Webhook-Secret': webhookSecret,
+              },
             }
           }
 
@@ -72,18 +76,19 @@ onRecordAfterCreateSuccess(
           })
 
           if (createRes.statusCode >= 200 && createRes.statusCode < 300) {
-            if (webhookUrl) {
+            if (webhookUrl && webhookSecret) {
               const webhookRes = $http.send({
                 url: evoUrl + '/webhook/set/' + instanceName,
                 method: 'POST',
                 headers: { apikey: evoKey, 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                  webhook: {
-                    enabled: true,
-                    url: webhookUrl + '/backend/v1/webhook/evolution',
-                    byEvents: false,
-                    base64: false,
-                    events: ['MESSAGES_UPSERT', 'CONNECTION_UPDATE'],
+                  enabled: true,
+                  url: webhookUrl + '/backend/v1/webhook/evolution',
+                  webhookByEvents: false,
+                  webhookBase64: false,
+                  events: ['MESSAGES_UPSERT', 'CONNECTION_UPDATE'],
+                  headers: {
+                    'X-Bitzaap-Webhook-Secret': webhookSecret,
                   },
                 }),
                 timeout: 15,

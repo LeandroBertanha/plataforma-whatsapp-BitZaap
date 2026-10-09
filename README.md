@@ -129,3 +129,19 @@ npm run build
 ```
 
 Os arquivos otimizados serão gerados na pasta `dist/` e estarão prontos para deploy.
+
+## 🔐 Integração com a Evolution API
+
+Configure os valores abaixo somente no gerenciador de segredos do Skip. Eles não devem ser
+incluídos no código ou enviados ao GitHub:
+
+- `EVOLUTION_API_URL`: URL HTTPS da instalação da Evolution API.
+- `EVOLUTION_API_KEY`: chave global utilizada pelo backend para administrar as instâncias.
+- `APP_WEBHOOK_URL`: URL pública do backend da BitZaap, sem barra no final.
+- `EVOLUTION_WEBHOOK_SECRET`: valor aleatório usado no cabeçalho
+  `X-Bitzaap-Webhook-Secret` para autenticar os webhooks.
+
+O endpoint autenticado `GET /backend/v1/integration/status` informa apenas se cada item foi
+configurado; nenhum segredo ou endereço é retornado ao navegador. O envio e a desconexão falham de
+forma segura quando a Evolution API não está disponível, evitando exibir mensagens como enviadas
+sem confirmação do provedor.

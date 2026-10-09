@@ -34,92 +34,94 @@ routerAdd(
     const evoUrl = $secrets.get('EVOLUTION_API_URL')
     const evoKey = $secrets.get('EVOLUTION_API_KEY')
 
+    if (!evoUrl || !evoKey) {
+      throw new InternalServerError('Evolution API configuration missing')
+    }
+
     let messageId = 'msg_' + $security.randomString(10)
 
-    if (evoUrl && evoKey) {
-      try {
-        let evoUrlSanitized = evoUrl
-        if (evoUrlSanitized.endsWith('/')) {
-          evoUrlSanitized = evoUrlSanitized.slice(0, -1)
-        }
+    try {
+      let evoUrlSanitized = evoUrl
+      if (evoUrlSanitized.endsWith('/')) {
+        evoUrlSanitized = evoUrlSanitized.slice(0, -1)
+      }
 
-        let res
-        if (type === 'audio' && mediaBase64) {
-          res = $http.send({
-            url: evoUrlSanitized + '/message/sendWhatsAppAudio/' + instanceName,
-            method: 'POST',
-            headers: { apikey: evoKey, 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              number: contact.getString('remote_jid'),
-              audio: mediaBase64,
-              delay: 1200,
-              encoding: true,
-            }),
-            timeout: 60,
-          })
-        } else if (type !== 'text' && mediaBase64) {
-          res = $http.send({
-            url: evoUrlSanitized + '/message/sendMedia/' + instanceName,
-            method: 'POST',
-            headers: { apikey: evoKey, 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              number: contact.getString('remote_jid'),
-              mediatype: type,
-              mimetype: mimeType,
-              caption: text,
-              media: mediaBase64,
-              fileName: fileName,
-              delay: 1200,
-            }),
-            timeout: 60,
-          })
-        } else {
-          res = $http.send({
-            url: evoUrlSanitized + '/message/sendText/' + instanceName,
-            method: 'POST',
-            headers: { apikey: evoKey, 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              number: contact.getString('remote_jid'),
-              text: text,
-              delay: 1200,
-            }),
-            timeout: 15,
-          })
-        }
+      let res
+      if (type === 'audio' && mediaBase64) {
+        res = $http.send({
+          url: evoUrlSanitized + '/message/sendWhatsAppAudio/' + instanceName,
+          method: 'POST',
+          headers: { apikey: evoKey, 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            number: contact.getString('remote_jid'),
+            audio: mediaBase64,
+            delay: 1200,
+            encoding: true,
+          }),
+          timeout: 60,
+        })
+      } else if (type !== 'text' && mediaBase64) {
+        res = $http.send({
+          url: evoUrlSanitized + '/message/sendMedia/' + instanceName,
+          method: 'POST',
+          headers: { apikey: evoKey, 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            number: contact.getString('remote_jid'),
+            mediatype: type,
+            mimetype: mimeType,
+            caption: text,
+            media: mediaBase64,
+            fileName: fileName,
+            delay: 1200,
+          }),
+          timeout: 60,
+        })
+      } else {
+        res = $http.send({
+          url: evoUrlSanitized + '/message/sendText/' + instanceName,
+          method: 'POST',
+          headers: { apikey: evoKey, 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            number: contact.getString('remote_jid'),
+            text: text,
+            delay: 1200,
+          }),
+          timeout: 15,
+        })
+      }
 
-        if (res.statusCode === 200 || res.statusCode === 201) {
-          if (res.json && res.json.key && res.json.key.id) {
-            messageId = res.json.key.id
-          } else if (res.json && res.json.messageId) {
-            messageId = res.json.messageId
-          }
-        } else {
-          let rawBody = ''
-          try {
-            if (res.body) rawBody = new TextDecoder().decode(res.body)
-          } catch (_) {}
-
-          $app
-            .logger()
-            .error(
-              'Evolution API Send Failed',
-              'instance',
-              instanceName,
-              'statusCode',
-              res.statusCode,
-              'response',
-              res.json ? JSON.stringify(res.json) : rawBody,
-            )
-
-          throw new InternalServerError('Evolution API Error')
+      if (res.statusCode === 200 || res.statusCode === 201) {
+        if (res.json && res.json.key && res.json.key.id) {
+          messageId = res.json.key.id
+        } else if (res.json && res.json.messageId) {
+          messageId = res.json.messageId
         }
-      } catch (err) {
-        if (err instanceof InternalServerError) {
-          throw err
-        }
-        $app.logger().error('Evolution API Send Exception', 'error', String(err))
+      } else {
+        let rawBody = ''
+        try {
+          if (res.body) rawBody = new TextDecoder().decode(res.body)
+        } catch (_) {}
+
+        $app
+          .logger()
+          .error(
+            'Evolution API Send Failed',
+            'instance',
+            instanceName,
+            'statusCode',
+            res.statusCode,
+            'response',
+            res.json ? JSON.stringify(res.json) : rawBody,
+          )
+
         throw new InternalServerError('Evolution API Error')
       }
+    } catch (err) {
+      if (err instanceof InternalServerError) {
+        throw err
+      }
+      $app.logger().error('Evolution API Send Exception', 'error', String(err))
+      throw new InternalServerError('Evolution API Error')
     }
 
     const msgsCol = $app.findCollectionByNameOrId('whatsapp_messages')

@@ -10,7 +10,13 @@ import {
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert'
-import { getInstances, fetchInstanceQR, logoutInstance } from '@/services/whatsapp'
+import {
+  getInstances,
+  getIntegrationStatus,
+  fetchInstanceQR,
+  logoutInstance,
+  type IntegrationStatus,
+} from '@/services/whatsapp'
 import { useRealtime } from '@/hooks/use-realtime'
 import { useAuth } from '@/hooks/use-auth'
 import { useToast } from '@/hooks/use-toast'
@@ -21,13 +27,18 @@ export default function ConnectionSetup() {
   const [instance, setInstance] = useState<any>(null)
   const [loading, setLoading] = useState(true)
   const [actionLoading, setActionLoading] = useState(false)
+  const [integration, setIntegration] = useState<IntegrationStatus | null>(null)
   const autoQrTriggered = useRef(false)
   const { user } = useAuth()
   const { toast } = useToast()
 
   const loadInstance = async () => {
     try {
-      const instances = await getInstances()
+      const [instances, integrationStatus] = await Promise.all([
+        getInstances(),
+        getIntegrationStatus(),
+      ])
+      setIntegration(integrationStatus)
       if (instances.length > 0) {
         setInstance(instances[0])
       } else {
@@ -35,6 +46,7 @@ export default function ConnectionSetup() {
       }
     } catch (e) {
       console.error('Failed to load instance:', e)
+      setIntegration(null)
     } finally {
       setLoading(false)
     }
@@ -58,7 +70,7 @@ export default function ConnectionSetup() {
   }
 
   const handleConnect = async (silent = false) => {
-    if (!instance) return
+    if (!instance || !integration?.ready) return
     setActionLoading(true)
     try {
       await fetchInstanceQR(instance.id)
@@ -196,6 +208,16 @@ export default function ConnectionSetup() {
         description="Vincule seu dispositivo para começar a enviar e receber mensagens de forma profissional e limpa."
       />
       <div className="flex flex-col items-start md:items-center mx-auto w-full px-6 md:px-10 pb-16">
+        {integration && !integration.ready ? (
+          <Alert className="mb-6 w-full max-w-md border-amber-200 bg-amber-50 text-amber-950">
+            <AlertTitle>Integração aguardando configuração</AlertTitle>
+            <AlertDescription>
+              O administrador ainda precisa concluir as credenciais e a proteção do webhook da
+              Evolution API. Nenhuma mensagem será marcada como enviada enquanto a integração não
+              estiver pronta.
+            </AlertDescription>
+          </Alert>
+        ) : null}
         {!instance ? (
           <div className="w-full max-w-md animate-in fade-in slide-in-from-bottom-4 duration-700 mt-8 md:mt-0">
             <Alert className="bg-white border border-slate-200/60 shadow-lg shadow-slate-200/40 rounded-[20px] p-6">
@@ -329,7 +351,9 @@ export default function ConnectionSetup() {
                   {instance.status !== 'connected' && (
                     <Button
                       onClick={() => handleConnect()}
-                      disabled={actionLoading || instance.status === 'connecting'}
+                      disabled={
+                        actionLoading || instance.status === 'connecting' || !integration?.ready
+                      }
                       className="w-full sm:w-auto bg-brand-500 hover:bg-brand-600 text-white shadow-sm shadow-brand-500/20 font-medium px-5 text-sm h-9"
                     >
                       {actionLoading || instance.status === 'connecting' ? (
