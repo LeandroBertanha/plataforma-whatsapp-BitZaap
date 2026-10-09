@@ -13,6 +13,7 @@ dist-ssr
 dev-dist
 dev-dist-ssr
 *.local
+*.tsbuildinfo
 .pnpm-store
 .pnpm
 
@@ -34,3 +35,4 @@ screenshot.png
 
 # Environment variables
 .env*
+!infra/evolution/.env.example
