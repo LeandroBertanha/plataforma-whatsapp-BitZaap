@@ -60,16 +60,16 @@ export default function Layout() {
     return (
       <div className="flex min-h-screen flex-col bg-slate-50">
         <header className="sticky top-0 z-50 w-full border-b border-slate-200/80 bg-white/90 backdrop-blur-xl">
-          <div className="container flex h-20 items-center justify-between">
+          <div className="mx-auto flex h-20 w-full max-w-[1400px] items-center justify-between px-4 sm:px-8">
             <Link to="/" aria-label="BitZaap - página inicial">
               <BrandLogo compact />
             </Link>
-            <nav className="flex items-center gap-4">
-              <Button variant="ghost" asChild>
+            <nav className="flex items-center gap-2 sm:gap-4">
+              <Button variant="ghost" className="hidden sm:inline-flex" asChild>
                 <Link to="/login">Entrar</Link>
               </Button>
               <Button
-                className="bg-brand-500 hover:bg-brand-600 shadow-sm shadow-brand-500/20"
+                className="h-9 bg-brand-500 px-3 text-xs hover:bg-brand-600 shadow-sm shadow-brand-500/20 sm:h-10 sm:px-4 sm:text-sm"
                 asChild
               >
                 <Link to="/register">Começar Agora</Link>
