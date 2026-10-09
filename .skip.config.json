@@ -1,5 +1,5 @@
 {
-  "name": "bitzaap",
+  "name": "frontend-react-vite-ts-shadcn",
   "entrypoint": "src/main.tsx",
   "routes": {
     "file": "src/App.tsx",
@@ -32,7 +32,7 @@
     "README.md"
   ],
   "deployment": {
-    "lastDevBuildRef": "0d11d42",
+    "lastDevBuildRef": "dc93a76",
     "lastProdBuildRef": "0d11d42",
     "publishedAt": "2026-10-09T21:21:03.458Z",
     "lastPublishedRef": "0d11d42"
