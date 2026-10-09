@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-09T20:56:17.896Z",
+  "generatedAt": "2026-10-09T21:25:30.026Z",
   "collections": [
     {
       "name": "users",
@@ -29,14 +29,19 @@
           "type": "autodate",
           "required": false,
           "system": false,
-          "autodateTriggers": ["onCreate"]
+          "autodateTriggers": [
+            "onCreate"
+          ]
         },
         {
           "name": "updated",
           "type": "autodate",
           "required": false,
           "system": false,
-          "autodateTriggers": ["onCreate", "onUpdate"]
+          "autodateTriggers": [
+            "onCreate",
+            "onUpdate"
+          ]
         }
       ],
       "indexes": [
@@ -73,7 +78,12 @@
           "type": "select",
           "required": false,
           "system": false,
-          "selectValues": ["pending", "connecting", "connected", "disconnected"]
+          "selectValues": [
+            "pending",
+            "connecting",
+            "connected",
+            "disconnected"
+          ]
         },
         {
           "name": "qrcode",
@@ -86,17 +96,24 @@
           "type": "autodate",
           "required": false,
           "system": false,
-          "autodateTriggers": ["onCreate"]
+          "autodateTriggers": [
+            "onCreate"
+          ]
         },
         {
           "name": "updated",
           "type": "autodate",
           "required": false,
           "system": false,
-          "autodateTriggers": ["onCreate", "onUpdate"]
+          "autodateTriggers": [
+            "onCreate",
+            "onUpdate"
+          ]
         }
       ],
-      "indexes": ["CREATE UNIQUE INDEX idx_wi_name ON whatsapp_instances (instance_name)"]
+      "indexes": [
+        "CREATE UNIQUE INDEX idx_wi_name ON whatsapp_instances (instance_name)"
+      ]
     },
     {
       "name": "whatsapp_contacts",
@@ -104,8 +121,8 @@
       "apiRules": {
         "list": "@request.auth.id != '' && user_id = @request.auth.id",
         "view": "@request.auth.id != '' && user_id = @request.auth.id",
-        "create": "@request.auth.id != ''",
-        "update": "@request.auth.id != ''",
+        "create": "@request.auth.id != '' && user_id = @request.auth.id",
+        "update": "@request.auth.id != '' && user_id = @request.auth.id",
         "delete": "@request.auth.id != '' && user_id = @request.auth.id"
       },
       "fields": [
@@ -158,14 +175,19 @@
           "type": "autodate",
           "required": false,
           "system": false,
-          "autodateTriggers": ["onCreate"]
+          "autodateTriggers": [
+            "onCreate"
+          ]
         },
         {
           "name": "updated",
           "type": "autodate",
           "required": false,
           "system": false,
-          "autodateTriggers": ["onCreate", "onUpdate"]
+          "autodateTriggers": [
+            "onCreate",
+            "onUpdate"
+          ]
         },
         {
           "name": "agent_paused",
@@ -178,7 +200,12 @@
           "type": "select",
           "required": false,
           "system": false,
-          "selectValues": ["in_conversation", "waiting", "resolved", "lost"]
+          "selectValues": [
+            "in_conversation",
+            "waiting",
+            "resolved",
+            "lost"
+          ]
         }
       ],
       "indexes": [
@@ -192,8 +219,8 @@
       "apiRules": {
         "list": "@request.auth.id != '' && user_id = @request.auth.id",
         "view": "@request.auth.id != '' && user_id = @request.auth.id",
-        "create": "@request.auth.id != ''",
-        "update": "@request.auth.id != ''",
+        "create": "@request.auth.id != '' && user_id = @request.auth.id",
+        "update": "@request.auth.id != '' && user_id = @request.auth.id",
         "delete": "@request.auth.id != '' && user_id = @request.auth.id"
       },
       "fields": [
@@ -235,7 +262,10 @@
           "type": "select",
           "required": false,
           "system": false,
-          "selectValues": ["in", "out"]
+          "selectValues": [
+            "in",
+            "out"
+          ]
         },
         {
           "name": "body",
@@ -254,21 +284,32 @@
           "type": "autodate",
           "required": false,
           "system": false,
-          "autodateTriggers": ["onCreate"]
+          "autodateTriggers": [
+            "onCreate"
+          ]
         },
         {
           "name": "updated",
           "type": "autodate",
           "required": false,
           "system": false,
-          "autodateTriggers": ["onCreate", "onUpdate"]
+          "autodateTriggers": [
+            "onCreate",
+            "onUpdate"
+          ]
         },
         {
           "name": "type",
           "type": "select",
           "required": false,
           "system": false,
-          "selectValues": ["text", "image", "audio", "document", "video"]
+          "selectValues": [
+            "text",
+            "image",
+            "audio",
+            "document",
+            "video"
+          ]
         },
         {
           "name": "media_file",
@@ -295,7 +336,9 @@
           "system": false
         }
       ],
-      "indexes": ["CREATE UNIQUE INDEX idx_wm_id ON whatsapp_messages (message_id)"]
+      "indexes": [
+        "CREATE UNIQUE INDEX idx_wm_id ON whatsapp_messages (message_id)"
+      ]
     },
     {
       "name": "ai_agents",
@@ -303,7 +346,7 @@
       "apiRules": {
         "list": "@request.auth.id != '' && user_id = @request.auth.id",
         "view": "@request.auth.id != '' && user_id = @request.auth.id",
-        "create": "@request.auth.id != ''",
+        "create": "@request.auth.id != '' && user_id = @request.auth.id",
         "update": "@request.auth.id != '' && user_id = @request.auth.id",
         "delete": "@request.auth.id != '' && user_id = @request.auth.id"
       },
@@ -351,21 +394,29 @@
           "type": "autodate",
           "required": false,
           "system": false,
-          "autodateTriggers": ["onCreate"]
+          "autodateTriggers": [
+            "onCreate"
+          ]
         },
         {
           "name": "updated",
           "type": "autodate",
           "required": false,
           "system": false,
-          "autodateTriggers": ["onCreate", "onUpdate"]
+          "autodateTriggers": [
+            "onCreate",
+            "onUpdate"
+          ]
         },
         {
           "name": "provider",
           "type": "select",
           "required": true,
           "system": false,
-          "selectValues": ["gemini", "openai"]
+          "selectValues": [
+            "gemini",
+            "openai"
+          ]
         },
         {
           "name": "api_key",
