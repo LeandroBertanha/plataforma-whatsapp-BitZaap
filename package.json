@@ -1,8 +1,8 @@
 {
-  "name": "skip-react-template",
-  "description": "A frontend React Vite TypeScript Shadcn UI template for Skip projects",
+  "name": "bitzaap",
+  "description": "Plataforma Bit Consulting para atendimento e automação no WhatsApp com IA",
   "private": true,
-  "version": "0.0.3",
+  "version": "0.0.1",
   "type": "module",
   "scripts": {
     "start": "vite dev",
