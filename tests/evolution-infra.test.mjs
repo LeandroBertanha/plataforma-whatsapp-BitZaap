@@ -40,5 +40,16 @@ test('o exemplo de ambiente contém apenas placeholders', async () => {
   assert.match(env, /EVOLUTION_API_KEY=substitua_por_/)
   assert.match(env, /POSTGRES_PASSWORD=substitua_por_/)
   assert.match(env, /REDIS_PASSWORD=substitua_por_/)
+  assert.match(env, /NGROK_AUTHTOKEN=substitua_pelo_/)
   assert.doesNotMatch(env, /@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/)
+})
+
+test('o modo local publica somente portas de loopback e usa HTTPS no ngrok', async () => {
+  const compose = await read('infra/evolution/compose.local.yaml')
+
+  assert.match(compose, /127\.0\.0\.1:8080:8080/)
+  assert.match(compose, /127\.0\.0\.1:4040:4040/)
+  assert.match(compose, /https:\/\/\$\{NGROK_DOMAIN\}/)
+  assert.match(compose, /NGROK_AUTHTOKEN: \$\{NGROK_AUTHTOKEN\}/)
+  assert.doesNotMatch(compose, /['"]0\.0\.0\.0:/)
 })

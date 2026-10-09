@@ -151,3 +151,7 @@ sem confirmação do provedor.
 A configuração reproduzível para executar a integração em uma VM Oracle Cloud Always Free está em
 [`infra/evolution`](infra/evolution/README.md). Ela inclui Evolution API, PostgreSQL, Redis, HTTPS
 automático e armazenamento persistente, sem publicar banco ou cache diretamente na internet.
+
+Como alternativa de homologação sem custo e sem servidor em nuvem, o guia
+[`Execução gratuita no Mac`](infra/evolution/LOCAL-MAC.md) utiliza Podman Desktop e um domínio HTTPS
+gratuito do ngrok.

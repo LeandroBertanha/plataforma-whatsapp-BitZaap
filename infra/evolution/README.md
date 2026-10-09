@@ -3,6 +3,10 @@
 Esta configuração executa a Evolution API, PostgreSQL, Redis e Caddy em uma única VM. Ela foi
 preparada para uma VM Oracle Cloud **Always Free** com Ubuntu e arquitetura ARM64.
 
+Se o cadastro da Oracle não estiver disponível, consulte o modo alternativo gratuito em
+[`LOCAL-MAC.md`](LOCAL-MAC.md). Ele executa os mesmos serviços no Mac e publica a API por um túnel
+HTTPS do ngrok.
+
 ## Arquitetura
 
 - Apenas as portas `80` e `443` ficam públicas.
