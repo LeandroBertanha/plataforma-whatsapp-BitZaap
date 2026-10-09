@@ -145,3 +145,9 @@ O endpoint autenticado `GET /backend/v1/integration/status` informa apenas se ca
 configurado; nenhum segredo ou endereço é retornado ao navegador. O envio e a desconexão falham de
 forma segura quando a Evolution API não está disponível, evitando exibir mensagens como enviadas
 sem confirmação do provedor.
+
+### Hospedagem gratuita da Evolution API
+
+A configuração reproduzível para executar a integração em uma VM Oracle Cloud Always Free está em
+[`infra/evolution`](infra/evolution/README.md). Ela inclui Evolution API, PostgreSQL, Redis, HTTPS
+automático e armazenamento persistente, sem publicar banco ou cache diretamente na internet.
