@@ -246,7 +246,7 @@ export function AgentFormSheet({ open, onOpenChange, agent }: AgentFormSheetProp
                     <Switch
                       checked={field.value}
                       onCheckedChange={field.onChange}
-                      className="data-[state=checked]:bg-violet-600"
+                      className="data-[state=checked]:bg-brand-500"
                     />
                   </FormControl>
                 </FormItem>
@@ -256,7 +256,7 @@ export function AgentFormSheet({ open, onOpenChange, agent }: AgentFormSheetProp
               <Button
                 type="submit"
                 disabled={form.formState.isSubmitting}
-                className="bg-violet-600 hover:bg-violet-700 text-white shadow-sm shadow-violet-600/20 h-9 px-4 text-[13px] font-medium"
+                className="bg-brand-500 hover:bg-brand-600 text-white shadow-sm shadow-brand-500/20 h-9 px-4 text-[13px] font-medium"
               >
                 {form.formState.isSubmitting ? 'Salvando...' : 'Salvar Agente'}
               </Button>

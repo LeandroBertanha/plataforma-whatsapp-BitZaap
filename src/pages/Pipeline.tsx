@@ -96,7 +96,7 @@ export default function Pipeline() {
                           <Button
                             variant="ghost"
                             size="icon"
-                            className="h-7 w-7 text-zinc-400 hover:text-violet-600 hover:bg-violet-50 rounded-full transition-colors shrink-0 -mr-1 -mt-1"
+                            className="h-7 w-7 text-zinc-400 hover:text-brand-600 hover:bg-brand-50 rounded-full transition-colors shrink-0 -mr-1 -mt-1"
                             onClick={() => navigate('/inbox', { state: { contactId: contact.id } })}
                             title="Abrir no Inbox"
                           >

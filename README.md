@@ -1,6 +1,6 @@
-# Projeto Criado com o Skip
+# BitZaap
 
-Este projeto foi criado de ponta a ponta com o [Skip](https://goskip.dev).
+Plataforma da Bit Consulting para centralizar atendimentos, organizar oportunidades e automatizar conversas no WhatsApp com inteligência artificial.
 
 ## 🚀 Stack Tecnológica
 

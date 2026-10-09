@@ -68,7 +68,7 @@ export default function Agents() {
                   setSelectedAgent(null)
                   setIsFormOpen(true)
                 }}
-                className="bg-violet-600 hover:bg-violet-700 text-white shadow-sm shadow-violet-600/20 h-9 px-3.5 text-[13px] font-medium"
+                className="bg-brand-500 hover:bg-brand-600 text-white shadow-sm shadow-brand-500/20 h-9 px-3.5 text-[13px] font-medium"
               >
                 <Plus className="mr-1.5 h-4 w-4" /> Novo Agente
               </Button>
@@ -83,8 +83,8 @@ export default function Agents() {
       <div className="pb-10">
         {agents.length === 0 ? (
           <div className="rounded-xl bg-white ring-1 ring-zinc-200/70 shadow-sm p-16 flex flex-col items-center justify-center text-center">
-            <div className="h-12 w-12 rounded-full bg-violet-50 flex items-center justify-center mb-3">
-              <Bot className="h-5 w-5 text-violet-500" />
+            <div className="h-12 w-12 rounded-full bg-brand-50 flex items-center justify-center mb-3">
+              <Bot className="h-5 w-5 text-brand-500" />
             </div>
             <p className="text-[14px] font-medium text-zinc-900">Nenhum agente configurado</p>
             <p className="text-[13px] text-zinc-500 mt-1 max-w-sm">
@@ -127,12 +127,12 @@ export default function Agents() {
                     <Switch
                       checked={agent.active}
                       onCheckedChange={(checked) => handleToggleActive(agent, checked)}
-                      className="data-[state=checked]:bg-violet-600"
+                      className="data-[state=checked]:bg-brand-500"
                     />
                     <span
                       className={cn(
                         'text-[12px] font-medium',
-                        agent.active ? 'text-violet-700' : 'text-zinc-500',
+                        agent.active ? 'text-brand-700' : 'text-zinc-500',
                       )}
                     >
                       {agent.active ? 'Ativo' : 'Inativo'}
@@ -146,7 +146,7 @@ export default function Agents() {
                         setSelectedAgent(agent)
                         setIsFormOpen(true)
                       }}
-                      className="h-8 w-8 p-0 text-zinc-500 hover:text-violet-700 hover:bg-violet-50"
+                      className="h-8 w-8 p-0 text-zinc-500 hover:text-brand-700 hover:bg-brand-50"
                     >
                       <Pencil className="h-4 w-4" />
                       <span className="sr-only">Editar</span>
