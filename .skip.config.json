@@ -1,5 +1,5 @@
 {
-  "name": "frontend-react-vite-ts-shadcn",
+  "name": "bitzaap",
   "entrypoint": "src/main.tsx",
   "routes": {
     "file": "src/App.tsx",

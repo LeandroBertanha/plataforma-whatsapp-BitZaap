@@ -138,8 +138,8 @@ export default function ConnectionSetup() {
         )
       case 'connecting':
         return (
-          <span className={`${base} bg-violet-50 text-violet-700`}>
-            <span className="h-2 w-2 rounded-full bg-violet-500 animate-pulse" />
+          <span className={`${base} bg-brand-50 text-brand-700`}>
+            <span className="h-2 w-2 rounded-full bg-brand-500 animate-pulse" />
             Conectando
           </span>
         )
@@ -200,8 +200,8 @@ export default function ConnectionSetup() {
           <div className="w-full max-w-md animate-in fade-in slide-in-from-bottom-4 duration-700 mt-8 md:mt-0">
             <Alert className="bg-white border border-slate-200/60 shadow-lg shadow-slate-200/40 rounded-[20px] p-6">
               <div className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-5">
-                <div className="h-12 w-12 rounded-xl bg-violet-100 flex items-center justify-center shrink-0 shadow-sm shadow-violet-100">
-                  <Smartphone className="h-5 w-5 text-violet-600" />
+                <div className="h-12 w-12 rounded-xl bg-brand-100 flex items-center justify-center shrink-0 shadow-sm shadow-brand-100">
+                  <Smartphone className="h-5 w-5 text-brand-600" />
                 </div>
                 <div className="space-y-1.5">
                   <AlertTitle className="text-base font-medium text-slate-900">
@@ -222,8 +222,8 @@ export default function ConnectionSetup() {
               <CardHeader className="p-6 flex flex-row items-center justify-between gap-4 border-b border-slate-50">
                 <div className="space-y-1 text-left">
                   <div className="flex items-center gap-2">
-                    <div className="flex items-center justify-center h-8 w-8 rounded-lg bg-violet-100">
-                      <Smartphone className="h-4 w-4 text-violet-600" />
+                    <div className="flex items-center justify-center h-8 w-8 rounded-lg bg-brand-100">
+                      <Smartphone className="h-4 w-4 text-brand-600" />
                     </div>
                     <CardTitle className="text-base font-medium text-slate-900 tracking-tight line-clamp-1">
                       {instance.instance_name}
@@ -267,12 +267,12 @@ export default function ConnectionSetup() {
                           </div>
                         </div>
                       ) : (
-                        <div className="w-52 h-52 bg-violet-50/30 rounded-2xl border border-dashed border-violet-200 flex flex-col items-center justify-center text-violet-400 space-y-3">
+                        <div className="w-52 h-52 bg-brand-50/30 rounded-2xl border border-dashed border-brand-200 flex flex-col items-center justify-center text-brand-400 space-y-3">
                           <QrCode
-                            className="h-10 w-10 opacity-40 text-violet-500"
+                            className="h-10 w-10 opacity-40 text-brand-500"
                             strokeWidth={1.5}
                           />
-                          <span className="text-xs font-medium tracking-wide text-violet-600">
+                          <span className="text-xs font-medium tracking-wide text-brand-600">
                             Aguardando QR Code
                           </span>
                         </div>
@@ -281,7 +281,7 @@ export default function ConnectionSetup() {
                       <div className="text-center space-y-2">
                         <h3 className="text-base font-medium text-slate-900 tracking-tight flex items-center justify-center gap-2">
                           {instance.status === 'connecting' && (
-                            <RefreshCw className="h-4 w-4 animate-spin text-violet-600" />
+                            <RefreshCw className="h-4 w-4 animate-spin text-brand-600" />
                           )}
                           {instance.status === 'connecting'
                             ? 'Conectando...'
@@ -330,7 +330,7 @@ export default function ConnectionSetup() {
                     <Button
                       onClick={() => handleConnect()}
                       disabled={actionLoading || instance.status === 'connecting'}
-                      className="w-full sm:w-auto bg-violet-600 hover:bg-violet-700 text-white shadow-sm font-medium px-5 text-sm h-9"
+                      className="w-full sm:w-auto bg-brand-500 hover:bg-brand-600 text-white shadow-sm shadow-brand-500/20 font-medium px-5 text-sm h-9"
                     >
                       {actionLoading || instance.status === 'connecting' ? (
                         <RefreshCw className="h-3.5 w-3.5 mr-2 animate-spin" />

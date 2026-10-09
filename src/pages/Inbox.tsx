@@ -658,7 +658,7 @@ export default function Inbox() {
               <Button
                 size="sm"
                 onClick={() => navigate('/connection-setup')}
-                className="h-8 px-3 text-xs font-medium bg-violet-600 hover:bg-violet-700 text-white shadow-sm shadow-violet-600/20 shrink-0"
+                className="h-8 px-3 text-xs font-medium bg-brand-500 hover:bg-brand-600 text-white shadow-sm shadow-brand-500/20 shrink-0"
               >
                 Conectar WhatsApp
               </Button>
@@ -669,7 +669,7 @@ export default function Inbox() {
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-[15px] w-[15px] text-zinc-400 pointer-events-none" />
             <Input
               placeholder="Buscar contatos..."
-              className="pl-9 h-9 bg-zinc-50/80 border-zinc-200/70 text-[13.5px] placeholder:text-zinc-400 focus-visible:ring-violet-500/30 focus-visible:ring-offset-0 focus-visible:border-violet-300"
+              className="pl-9 h-9 bg-zinc-50/80 border-zinc-200/70 text-[13.5px] placeholder:text-zinc-400 focus-visible:ring-brand-500/30 focus-visible:ring-offset-0 focus-visible:border-brand-300"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
@@ -679,7 +679,7 @@ export default function Inbox() {
         <ScrollArea className="flex-1">
           {loadingContacts ? (
             <div className="flex items-center justify-center p-10">
-              <Loader2 className="h-5 w-5 animate-spin text-violet-500" />
+              <Loader2 className="h-5 w-5 animate-spin text-brand-500" />
             </div>
           ) : filteredContacts.length === 0 ? (
             <div className="flex flex-col items-center justify-center p-10 text-center">
@@ -703,21 +703,21 @@ export default function Inbox() {
                       className={cn(
                         'w-full flex items-center gap-3 p-2.5 rounded-lg text-left transition-all',
                         isActive
-                          ? 'bg-violet-50 ring-1 ring-violet-100'
+                          ? 'bg-brand-50 ring-1 ring-brand-100'
                           : 'hover:bg-zinc-50 ring-1 ring-transparent',
                       )}
                     >
                       <span
                         className={cn(
                           'relative flex overflow-hidden rounded-full h-11 w-11 shrink-0 ring-2 transition-colors',
-                          isActive ? 'ring-violet-200' : 'ring-zinc-100',
+                          isActive ? 'ring-brand-200' : 'ring-zinc-100',
                         )}
                       >
                         <span
                           className={cn(
                             'flex h-full w-full items-center justify-center rounded-full text-[13px] font-semibold',
                             isActive
-                              ? 'bg-gradient-to-br from-violet-100 to-violet-200 text-violet-700'
+                              ? 'bg-gradient-to-br from-brand-100 to-brand-200 text-brand-700'
                               : 'bg-gradient-to-br from-zinc-100 to-zinc-200 text-zinc-600',
                           )}
                         >
@@ -730,7 +730,7 @@ export default function Inbox() {
                           <span
                             className={cn(
                               'text-[14px] font-semibold truncate flex-1 min-w-0 tracking-tight',
-                              isActive ? 'text-violet-900' : 'text-zinc-900',
+                              isActive ? 'text-brand-900' : 'text-zinc-900',
                             )}
                           >
                             {contact.name || contact.phone}
@@ -739,7 +739,7 @@ export default function Inbox() {
                             <span
                               className={cn(
                                 'text-[11px] shrink-0 whitespace-nowrap font-medium',
-                                isActive ? 'text-violet-600' : 'text-zinc-400',
+                                isActive ? 'text-brand-600' : 'text-zinc-400',
                               )}
                             >
                               {format(new Date(contact.last_message_at), 'HH:mm')}
@@ -749,7 +749,7 @@ export default function Inbox() {
                         <p
                           className={cn(
                             'text-[12.5px] truncate leading-snug',
-                            isActive ? 'text-violet-700/80' : 'text-zinc-500',
+                            isActive ? 'text-brand-700/80' : 'text-zinc-500',
                           )}
                         >
                           {contact.last_message || 'Nenhuma mensagem ainda'}
@@ -774,7 +774,7 @@ export default function Inbox() {
         {!selectedContact ? (
           <div className="flex-1 flex flex-col items-center justify-center bg-zinc-50/40">
             <div className="h-20 w-20 bg-white rounded-2xl flex items-center justify-center mb-5 ring-1 ring-zinc-200/70 shadow-sm">
-              <MessageSquare className="h-8 w-8 text-violet-500" strokeWidth={1.75} />
+              <MessageSquare className="h-8 w-8 text-brand-500" strokeWidth={1.75} />
             </div>
             <h2 className="text-[17px] font-semibold tracking-tight text-zinc-900">
               Selecione uma conversa
@@ -796,7 +796,7 @@ export default function Inbox() {
                 <AlertCircle className="h-5 w-5 rotate-90" />
               </Button>
               <Avatar className="h-10 w-10 ring-2 ring-zinc-100">
-                <AvatarFallback className="bg-gradient-to-br from-violet-100 to-violet-200 text-violet-700 text-[13px] font-semibold">
+                <AvatarFallback className="bg-gradient-to-br from-brand-100 to-brand-200 text-brand-700 text-[13px] font-semibold">
                   {selectedContact.name?.substring(0, 2).toUpperCase() ||
                     selectedContact.phone?.substring(0, 2)}
                 </AvatarFallback>
@@ -823,7 +823,7 @@ export default function Inbox() {
                 className={cn(
                   'ml-auto h-8 text-xs font-medium transition-colors shrink-0 px-2.5',
                   selectedContact.agent_paused
-                    ? 'text-violet-600 hover:bg-violet-50 hover:text-violet-700'
+                    ? 'text-brand-600 hover:bg-brand-50 hover:text-brand-700'
                     : 'text-zinc-500 hover:text-amber-600 hover:bg-amber-50',
                 )}
                 title={
@@ -858,7 +858,7 @@ export default function Inbox() {
             >
               {loadingMessages ? (
                 <div className="flex justify-center p-4">
-                  <Loader2 className="h-5 w-5 animate-spin text-violet-500" />
+                  <Loader2 className="h-5 w-5 animate-spin text-brand-500" />
                 </div>
               ) : messages.length === 0 ? (
                 <div className="flex justify-center p-4">
@@ -929,7 +929,7 @@ export default function Inbox() {
                         />
                       </div>
                     ) : (
-                      <div className="h-11 w-11 rounded-lg ring-1 ring-zinc-200 bg-white flex items-center justify-center shrink-0 text-violet-500">
+                      <div className="h-11 w-11 rounded-lg ring-1 ring-zinc-200 bg-white flex items-center justify-center shrink-0 text-brand-500">
                         {fileType === 'audio' ? (
                           <FileAudio className="h-5 w-5" />
                         ) : (
@@ -1005,7 +1005,7 @@ export default function Inbox() {
                             type="button"
                             variant="ghost"
                             size="icon"
-                            className="h-11 w-11 shrink-0 text-zinc-500 hover:text-violet-600 hover:bg-violet-50 rounded-full"
+                            className="h-11 w-11 shrink-0 text-zinc-500 hover:text-brand-600 hover:bg-brand-50 rounded-full"
                             disabled={instance?.status !== 'connected'}
                           >
                             <Paperclip className="h-5 w-5" />
@@ -1034,8 +1034,8 @@ export default function Inbox() {
                             }
                             className="gap-3 cursor-pointer py-2 px-2.5 rounded-lg text-[13px] font-medium"
                           >
-                            <div className="flex h-7 w-7 items-center justify-center rounded-md bg-violet-50">
-                              <FileText className="h-3.5 w-3.5 text-violet-600" />
+                            <div className="flex h-7 w-7 items-center justify-center rounded-md bg-brand-50">
+                              <FileText className="h-3.5 w-3.5 text-brand-600" />
                             </div>
                             <span>Documento</span>
                           </DropdownMenuItem>
@@ -1062,7 +1062,7 @@ export default function Inbox() {
                               : 'Digite uma mensagem...'
                             : 'WhatsApp desconectado.'
                         }
-                        className="min-h-[44px] max-h-32 bg-zinc-50/80 border-zinc-200/70 resize-none py-3 text-[14px] placeholder:text-zinc-400 focus-visible:ring-violet-500/30 focus-visible:ring-offset-0 focus-visible:border-violet-300 rounded-2xl"
+                        className="min-h-[44px] max-h-32 bg-zinc-50/80 border-zinc-200/70 resize-none py-3 text-[14px] placeholder:text-zinc-400 focus-visible:ring-brand-500/30 focus-visible:ring-offset-0 focus-visible:border-brand-300 rounded-2xl"
                         rows={1}
                         disabled={instance?.status !== 'connected'}
                       />
@@ -1082,7 +1082,7 @@ export default function Inbox() {
                     <Button
                       type="submit"
                       size="icon"
-                      className="h-11 w-11 rounded-full bg-violet-600 hover:bg-violet-700 shrink-0 shadow-sm shadow-violet-600/30"
+                      className="h-11 w-11 rounded-full bg-brand-500 hover:bg-brand-600 shrink-0 shadow-sm shadow-brand-500/30"
                       disabled={instance?.status !== 'connected'}
                     >
                       <Send className="h-[18px] w-[18px] ml-0.5" />
@@ -1091,7 +1091,7 @@ export default function Inbox() {
                     <Button
                       type="button"
                       size="icon"
-                      className="h-11 w-11 rounded-full bg-violet-600 hover:bg-violet-700 shrink-0 shadow-sm shadow-violet-600/30"
+                      className="h-11 w-11 rounded-full bg-brand-500 hover:bg-brand-600 shrink-0 shadow-sm shadow-brand-500/30"
                       disabled={instance?.status !== 'connected'}
                       onClick={startRecording}
                     >

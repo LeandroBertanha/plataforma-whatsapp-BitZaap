@@ -6,6 +6,7 @@ import { getInstances } from '@/services/whatsapp'
 import { useRealtime } from '@/hooks/use-realtime'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
+import { BrandLogo } from '@/components/BrandLogo'
 import {
   Sidebar,
   SidebarContent,
@@ -50,7 +51,7 @@ export default function Layout() {
   if (loading) {
     return (
       <div className="flex h-screen items-center justify-center bg-zinc-50">
-        <Loader2 className="h-7 w-7 animate-spin text-violet-500" />
+        <Loader2 className="h-7 w-7 animate-spin text-brand-500" />
       </div>
     )
   }
@@ -58,19 +59,19 @@ export default function Layout() {
   if (!user) {
     return (
       <div className="flex min-h-screen flex-col bg-slate-50">
-        <header className="sticky top-0 z-50 w-full border-b bg-white/80 backdrop-blur-sm">
-          <div className="container flex h-16 items-center justify-between">
-            <Link to="/" className="flex items-center gap-2">
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-violet-500 to-violet-600 shadow-sm shadow-violet-500/20">
-                <MessageSquare className="h-[18px] w-[18px] text-white" />
-              </div>
-              <span className="text-xl font-bold tracking-tight text-slate-900">ZappFlow</span>
+        <header className="sticky top-0 z-50 w-full border-b border-slate-200/80 bg-white/90 backdrop-blur-xl">
+          <div className="container flex h-20 items-center justify-between">
+            <Link to="/" aria-label="BitZaap - página inicial">
+              <BrandLogo compact />
             </Link>
             <nav className="flex items-center gap-4">
               <Button variant="ghost" asChild>
                 <Link to="/login">Entrar</Link>
               </Button>
-              <Button className="bg-violet-500 hover:bg-violet-600" asChild>
+              <Button
+                className="bg-brand-500 hover:bg-brand-600 shadow-sm shadow-brand-500/20"
+                asChild
+              >
                 <Link to="/register">Começar Agora</Link>
               </Button>
             </nav>
@@ -99,14 +100,9 @@ export default function Layout() {
 
   return (
     <SidebarProvider>
-      <Sidebar variant="inset" className="border-r border-zinc-200/70 bg-white">
-        <SidebarHeader className="px-4 pb-5 pt-6">
-          <div className="flex items-center gap-2.5">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-violet-500 to-violet-600 shadow-sm shadow-violet-500/20">
-              <MessageSquare className="h-[18px] w-[18px] text-white" />
-            </div>
-            <span className="text-[17px] font-semibold tracking-tight text-zinc-900">ZappFlow</span>
-          </div>
+      <Sidebar variant="inset" className="border-r border-slate-200/70 bg-white">
+        <SidebarHeader className="px-4 pb-5 pt-5">
+          <BrandLogo compact className="scale-[0.92] origin-left" />
         </SidebarHeader>
         <SidebarContent className="px-3 pt-2">
           <div className="px-2 pb-2 text-[11px] font-semibold uppercase tracking-wider text-zinc-400">
@@ -123,13 +119,13 @@ export default function Layout() {
                     className={cn(
                       'h-9 rounded-lg px-2.5 text-[13.5px] font-medium transition-colors',
                       active
-                        ? 'bg-violet-50 text-violet-700 hover:bg-violet-50 hover:text-violet-700'
+                        ? 'bg-brand-50 text-brand-800 hover:bg-brand-50 hover:text-brand-800'
                         : 'text-zinc-600 hover:bg-zinc-100/70 hover:text-zinc-900',
                     )}
                   >
                     <Link to={to}>
                       <Icon
-                        className={cn('h-4 w-4', active ? 'text-violet-600' : 'text-zinc-400')}
+                        className={cn('h-4 w-4', active ? 'text-brand-600' : 'text-zinc-400')}
                       />
                       <span>{label}</span>
                     </Link>
@@ -144,7 +140,7 @@ export default function Layout() {
                 className={cn(
                   'h-9 rounded-lg px-2.5 text-[13.5px] font-medium transition-colors',
                   location.pathname === '/connection-setup'
-                    ? 'bg-violet-50 text-violet-700 hover:bg-violet-50 hover:text-violet-700'
+                    ? 'bg-brand-50 text-brand-800 hover:bg-brand-50 hover:text-brand-800'
                     : 'text-zinc-600 hover:bg-zinc-100/70 hover:text-zinc-900',
                 )}
               >
@@ -153,7 +149,7 @@ export default function Layout() {
                     className={cn(
                       'h-4 w-4',
                       location.pathname === '/connection-setup'
-                        ? 'text-violet-600'
+                        ? 'text-brand-600'
                         : 'text-zinc-400',
                     )}
                   />
@@ -195,9 +191,11 @@ export default function Layout() {
         </SidebarFooter>
       </Sidebar>
       <SidebarInset className="bg-zinc-50/60">
-        <header className="flex h-14 shrink-0 items-center gap-2 border-b border-zinc-200/70 bg-white px-4 md:hidden">
+        <header className="flex h-16 shrink-0 items-center gap-3 border-b border-zinc-200/70 bg-white px-4 md:hidden">
           <SidebarTrigger />
-          <span className="font-semibold tracking-tight text-zinc-900">ZappFlow</span>
+          <span className="font-extrabold tracking-[-0.04em] text-bit-navy">
+            Bit<span className="text-brand-500">Zaap</span>
+          </span>
         </header>
         <div className="flex flex-1 flex-col overflow-hidden">
           <Outlet />
