@@ -53,3 +53,22 @@ test('o modo local publica somente portas de loopback e usa HTTPS no ngrok', asy
   assert.match(compose, /NGROK_AUTHTOKEN: \$\{NGROK_AUTHTOKEN\}/)
   assert.doesNotMatch(compose, /['"]0\.0\.0\.0:/)
 })
+
+test('o gerador local protege segredos e evita sobrescrita acidental', async () => {
+  const script = await read('infra/evolution/setup-local-env.sh')
+
+  assert.match(script, /umask 077/)
+  assert.match(script, /chmod 600/)
+  assert.match(script, /openssl rand -hex 32/)
+  assert.match(script, /ja existe[\s\S]*--force/)
+  assert.doesNotMatch(script, /echo .*\$token/)
+})
+
+test('o wrapper local resolve o provedor Compose sem expor configuracoes', async () => {
+  const script = await read('infra/evolution/podman-compose-local.sh')
+
+  assert.match(script, /PODMAN_COMPOSE_PROVIDER/)
+  assert.match(script, /compose\.yaml/)
+  assert.match(script, /compose\.local\.yaml/)
+  assert.match(script, /exec podman compose/)
+})

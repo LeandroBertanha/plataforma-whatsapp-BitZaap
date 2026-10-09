@@ -23,33 +23,36 @@ homologação, não para uma operação comercial de alto volume.
 
 ## Configuração
 
-Dentro de `infra/evolution`:
+No painel do ngrok, copie somente o valor de **Your Authtoken**. Depois, dentro de
+`infra/evolution`, execute:
 
 ```bash
-cp .env.example .env
-chmod 600 .env
+./setup-local-env.sh seu-dominio-gratuito.ngrok-free.dev
 ```
 
-No arquivo `.env`:
+O script lê o authtoken da área de transferência do macOS, gera chaves aleatórias diferentes e
+grava o `.env` com permissão `600`. Os segredos não são exibidos no terminal. Como alternativa,
+forneça o token somente para o processo:
 
-- Preencha `EVOLUTION_API_KEY`, `POSTGRES_PASSWORD` e `REDIS_PASSWORD` com valores gerados por
-  `openssl rand -hex 32`.
-- Preencha `NGROK_DOMAIN` sem `https://`.
-- Preencha `NGROK_AUTHTOKEN` com o token da conta ngrok.
-- Defina `EVOLUTION_DOMAIN` com o mesmo valor de `NGROK_DOMAIN`.
+```bash
+NGROK_AUTHTOKEN='seu-token' ./setup-local-env.sh seu-dominio-gratuito.ngrok-free.dev
+```
+
+O script se recusa a sobrescrever um `.env` existente. Use `--force` apenas em uma rotação
+intencional de todos os segredos.
 
 ## Inicialização
 
 O comando abaixo inicia apenas os serviços locais; o proxy Caddy usado em VPS não será iniciado.
 
 ```bash
-podman compose -f compose.yaml -f compose.local.yaml up -d postgres redis evolution ngrok
+./podman-compose-local.sh up -d postgres redis evolution ngrok
 ```
 
 Valide o estado:
 
 ```bash
-podman compose -f compose.yaml -f compose.local.yaml ps
+./podman-compose-local.sh ps
 curl --fail --show-error http://127.0.0.1:8080
 curl --fail --show-error "https://${NGROK_DOMAIN}"
 ```
@@ -69,10 +72,10 @@ Depois, abra a tela de conexão da BitZaap e gere o QR Code.
 
 ```bash
 # Parar sem apagar os dados
-podman compose -f compose.yaml -f compose.local.yaml stop
+./podman-compose-local.sh stop
 
 # Iniciar novamente
-podman compose -f compose.yaml -f compose.local.yaml start
+./podman-compose-local.sh start
 ```
 
 Não use `down -v`: a opção `-v` remove volumes e pode apagar banco, cache e credenciais da sessão
